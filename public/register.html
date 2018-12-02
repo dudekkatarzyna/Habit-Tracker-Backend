@@ -70,6 +70,7 @@
             background-color: #fff !important;
             color: #623B5A;
         }
+
         .panel-footer h3 {
             font-size: 32px;
         }
@@ -111,7 +112,6 @@
             color: #fff !important;
         }
 
-
         .slide {
             animation-name: slide;
             -webkit-animation-name: slide;
@@ -142,16 +142,16 @@
             }
         }
 
-
-        .my-pink-btn{
+        .my-pink-btn {
             background-color: #623B5A !important;
         }
 
-        .error{
+        .error {
             color: darkred !important;
         }
     </style>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" rel="stylesheet"
+          id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
@@ -170,7 +170,7 @@
 </nav>
 
 
-<section class="section section-login" >
+<section class="section section-login">
     <div class="valign-wrapper row login-box" style="margin-top: 70px">
         <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
             <form id="register-form">
@@ -198,8 +198,11 @@
                             <input type="password" class="validate" name="cnfPwd" id="confirmPassword" required/>
                         </div>
                     </div>
-                    <p class="error hide register-error">
+                    <p class="error hide password-error">
                         Podane hasła nie pasują do siebie!
+                    </p>
+                    <p class="error hide username-error">
+                        Nazwa użytkownika jest już zajęta!
                     </p>
                 </div>
                 <div class="card-action right-align">

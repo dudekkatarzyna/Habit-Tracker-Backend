@@ -26,14 +26,21 @@ $(function () {
             }).catch(function (error) {
 
                 console.log(error.response.status);
+                switch (error.response.status) {
+                    case 416: //password dont match
+                        $('.password-error').removeClass('hide')
+                        $('#password').val('');
+                        $('#confirmPassword').val('');
+                        break;
 
-                // if(error === 401)
-                // {
-                //     //wyświetlenie info o błędzie
-                //     $('.register-error').removeClass('hide')
-                //     console.log(error);
-                // }
-                //
+
+                    case 406: //user already exists
+                        $('#username').val('');
+                        $('#password').val('');
+                        $('#confirmPassword').val('');
+                        $('.username-error').removeClass('hide')
+                        break;
+                }
 
             }
         );

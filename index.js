@@ -1,6 +1,7 @@
 const express = require('express');
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 const userRoute = require('./routes/user');
 const User = require('./models/user');
@@ -24,11 +25,17 @@ app.use('/resources', express.static('public/resources'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(cookieParser());
+
 //use sessions for tracking logins
 app.use(expressSession({
+    key: 'user_sid',
     secret: 'work hard',
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
 }));
 
 // route for Home-Page
@@ -47,6 +54,17 @@ app.use('/habitsPerUser', habitsPerUser);
 const port = 8082;
 app.listen(port, () => {
     console.log('Server is up and running on port numner ' + port);
+});
+
+
+// This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
+// This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
+
+app.use((req, res, next) => {
+    if (req.cookies.user_sid && !req.session.user) {
+        res.clearCookie('user_sid');
+    }
+    next();
 });
 
 app.route('/login')
@@ -90,14 +108,15 @@ app.route('/register')
             });
 
     });
-// .then(function (response){
-//
-//     req.session.user = req.user.dataValues;
-//     res.redirect('/dashboard');
-// })
-// .catch(error => {
-//     res.redirect('/register');
-// });
+
+app.get('/logout', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.clearCookie('user_sid');
+        res.redirect('/');
+    } else {
+        res.redirect('/');
+    }
+});
 
 
 //module.exports=isNotLoggedIn;
