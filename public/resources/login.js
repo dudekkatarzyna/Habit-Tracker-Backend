@@ -1,9 +1,9 @@
 $(function () {
 
     $('#sign-up').on('click', function (event) {
-    event.preventDefault();
+        event.preventDefault();
 
-        window.location="/register";
+        window.location = "/register";
     });
 
 
@@ -17,12 +17,18 @@ $(function () {
             .then(function (response) {
 
                 console.log(response);
-                window.location= "/dashboard";
+                window.location = "/dashboard";
 
             }).catch(function (error) {
 
-                //wyświetlenie info o błędzie
-                $('.login-error').removeClass('hide')
+
+                $('.login-error').removeClass('hide');
+
+                $('#username').val('');
+                $('#username').removeClass('valid');
+                $('#password').val('');
+                $('#password').removeClass('valid');
+
                 console.log(error);
 
             }

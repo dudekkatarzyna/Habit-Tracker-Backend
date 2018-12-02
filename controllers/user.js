@@ -1,15 +1,8 @@
 
-
 const User = require('../models/user');
 
+exports.user_create = function (req, next) {
 
-exports.test = function (req, res) {
-    res.send('Greetings from the Test controller!');
-};
-
-exports.user_create = function (req, res, next) {
-
-    //console.log(req.body);
     if(req.body.password !== req.body.confirmPassword){
         const error=new Error("Not matching");
         error.status = 416;
@@ -26,12 +19,6 @@ exports.user_create = function (req, res, next) {
     );
 
     return user.save();
-    // return user.save(function (err) {
-    //     if (err) {
-    //         return next(err);
-    //     }
-    //    // res.send(user);
-    // })
 };
 
 exports.user_details = function (req, res, next) {

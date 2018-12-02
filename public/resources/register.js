@@ -30,14 +30,20 @@ $(function () {
                     case 416: //password dont match
                         $('.password-error').removeClass('hide')
                         $('#password').val('');
+                        $('#password').removeClass('valid');
                         $('#confirmPassword').val('');
+                        $('#confirmPassword').removeClass('valid');
+
                         break;
 
 
                     case 406: //user already exists
                         $('#username').val('');
+                        $('#username').removeClass('valid');
                         $('#password').val('');
+                        $('#password').removeClass('valid');
                         $('#confirmPassword').val('');
+                        $('#confirmPassword').removeClass('valid');
                         $('.username-error').removeClass('hide')
                         break;
                 }
