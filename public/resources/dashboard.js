@@ -1,44 +1,37 @@
 $(function () {
 
-    // axios.get('/user/isLogged').then(function (response) {
-    //         console.log(response);
-    //     }
-    // ).catch(error)(
-    //     console.log(error)
-    // );
+    $('#newHabitFrom').submit(sendNewHabit);
 
-    axios.get('/user/userList')
-        .then(function (response) {
+    $('#submitNewHabitForm').click(sendNewHabit);
 
-            const data = response.data;
-            for (let prop in data) {
-                var userHabits = [];
-                for (let habit in data[prop].habitsPerUserId) {
-                    //console.log('habit ' + data[prop].habitsPerUserId[habit]);
 
-                    axios.get('habitsPerUser/details/' + data[prop].habitsPerUserId[habit])
-                        .then(function (response) {
-                            var name = response.data.name;
-                            //console.log(name);
-                            userHabits.push(name);
-                            //console.log(userHabits);
+    $('#food').on('click', function () {
+        $("#habits tr.hide").removeClass("hide");
+        $("#habits tr").not(".5c054ec40ad31d10dcf96675, .never-hide").addClass("hide");
+    });
 
-                            $('#users tr:last').after(` <tr>
-                                <td>${data[prop]._id}</td>
-                            <td>${data[prop].username}</td>
-                            <td>${data[prop].name}</td>
-                            <td>${data[prop].surname}</td>
-                            <td>${name}</td>
-                            </tr>`);
+    $('#skill').on('click', function () {
+        $("#habits tr.hide").removeClass("hide");
+        $("#habits tr").not(".5c054edb0ad31d10dcf96677, .never-hide").addClass("hide");
+    });
 
-                        });
-                }
-            }
+    $('#excercise').on('click', function () {
+        $("#habits tr.hide").removeClass("hide");
+        $("#habits tr").not(".5c054ea146238108a4770b1d, .never-hide").addClass("hide");
+    });
 
-        });
+
+    $('#self-care').on('click', function () {
+        $("#habits tr.hide").removeClass("hide");
+        $("#habits tr").not(".5c054ecf0ad31d10dcf96676, .never-hide").addClass("hide");
+    });
+
+    $('#clearFilter').on('click', function () {
+        $("#habits tr.hide").removeClass("hide");
+    });
 
     axios.get('/habitsPerUser/habitsList')
-        .then(function (response) {
+        .then(async function (response) {
             //console.log(response);
             const data = response.data;
 
@@ -55,10 +48,12 @@ $(function () {
 
                 }
 
-                $('#habits tr:last').after(` <tr>
-            <td>${data[prop]._id}</td>
+                const response = await axios.get(`/category/details/${data[prop].categoryId}`);
+                console.log('response:', response);
+
+                $('#habits tr:last').after(` <tr id="tr-${data[prop]._id}" class="${data[prop].categoryId}">
             <td>${data[prop].name}</td>
-            <td>${data[prop].categoryId}</td>
+            <td>${response.data.name}</td>
             <td id="done-${data[prop]._id}">${format.join("")}</td>
             <td>
              <div class="form-check form-check-inline">
@@ -72,12 +67,15 @@ $(function () {
                 <label class="form-check-label" for="inlineCheckbox4-${data[prop]._id}">${days[date.getDay()]}</label>
              </div>
             </td>
+            <td>
+                <button type="button" class="btn btn-secondary deleteButton" habitId="${data[prop]._id}">delete</button>
+            </td>
         </tr>`);
 
                 //  console.log(new Date(data[prop].done[1]).getDay());
                 //console.log("NEW ENTRY");
                 for (let date2 of data[prop].done) {
-                    console.log(date2);
+                    //console.log(date2);
                     for (let i = 1; i <= 4; i++) {
                         //console.log(new Date(date2).getDay());
                         //console.log(getDate(date, (4 - i)).getDay());
@@ -97,11 +95,32 @@ $(function () {
             }
         });
 
+    $('#habits').on('click', '.deleteButton', event => {
+
+        console.log("clicked");
+        const habitId = event.target.getAttribute('habitId');
+        console.log(event.target.getAttribute('habitId'));
+        event.preventDefault();
+
+        $('#tr-' + habitId).remove();
+
+        axios.delete('/habitsPerUser/'+habitId+'/delete')
+             .then(function (response) {
+
+                 console.log(response);
+                 window.location = "/dashboard";
+
+             }).catch(function (error) {
+                 console.log(error);
+
+             }
+         );
+    });
+
+
     $('#habits').on('click', '.mark-done', function (event) {
-        //console.log(event.target.getAttribute('data-habit'));
-        //console.log(event.target.getAttribute('data-timestamp'));
 
-
+        console.log("habits");
         event.target.setAttribute('disabled', 'disabled');
 
         var habitId = event.target.getAttribute('data-habit');
@@ -148,4 +167,27 @@ function formatDates(dates) {
         newDates.push(formatDate(new Date(date)));
     }
     return newDates;
+}
+
+async function sendNewHabit(event) {
+
+    event.preventDefault();
+    console.log("submitted");
+
+    const habitName = $("#habitName").val();
+    const category = $("#category").val();
+
+    console.log('log:', habitName, category);
+
+    axios.post('/habitsPerUser/create', {habitName, category})
+        .then(function (response) {
+            console.log("saved");
+            console.log(response);
+            window.location = "/dashboard";
+
+        }).catch(function (error) {
+            console.log(error);
+
+        }
+    );
 }

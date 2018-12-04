@@ -1,14 +1,17 @@
 const HabitsPerUser = require('../models/habitsPerUser');
-
+const Category = require('../controllers/category')
 
 exports. hpu_create = function (req, res, next) {
     console.log(req.body);
+
+    console.log(req.session)
     let habitsPerUser = new HabitsPerUser(
         {
-            id: req.body.id,
-            name: req.body.name,
-            categoryId: req.body.categoryId,
-            done: [new Date().getTime()]
+            userId: req.session.userId,
+            name: req.body.habitName,
+            categoryId: req.body.category,
+            done: []
+
         }
     );
 
@@ -16,14 +19,15 @@ exports. hpu_create = function (req, res, next) {
         if (err) {
             return next(err);
         }
-        res.send('Habit Created successfully')
+       res.send('Habit Created successfully')
     })
 };
 
 exports.hpu_details = function (req, res, next) {
-    HabitsPerUser.findById(req.params.id, function (err, user) {
+    console.log("hpu_details")
+    HabitsPerUser.findById(req.params.id, function (err, habitsPerUser) {
         if (err) return next(err);
-        res.send(user);
+        res.send(habitsPerUser);
     })
 };
 
@@ -36,9 +40,11 @@ exports.hpu_update = function (req, res, next) {
 };
 
 exports.hpu_delete = function (req, res) {
+
     HabitsPerUser.findByIdAndRemove(req.params.id, function (err) {
         if (err) return next(err);
-        res.send('Deleted successfully!');
+
+        //res.send('Deleted successfully!');
     })
 };
 

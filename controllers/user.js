@@ -14,7 +14,8 @@ exports.user_create = function (req, next) {
             password: req.body.password,
             name: req.body.name,
             surname: req.body.surname,
-            habitsPerUserId: req.body.habitsPerUserId
+            habitsPerUserId: req.body.habitsPerUserId,
+            admin: false
         }
     );
 
@@ -22,9 +23,11 @@ exports.user_create = function (req, next) {
 };
 
 exports.user_details = function (req, res, next) {
-    User.findById(req.params.id, function (err, user) {
+    User.findById(req, function (err, user) {
         if (err) return next(err);
-        res.send(user);
+
+        return user;
+       // res.send(user);
     })
 };
 
@@ -43,13 +46,18 @@ exports.user_delete = function (req, res) {
 };
 
 exports.user_list = function (req, res, next) {
+
+    console.log("in user list")
+
     User.find({}, function(err, users) {
+        console.log("in user find")
         var userMap = {};
 
         users.forEach(function(user) {
             userMap[user._id] = user;
         });
 
+        console.log("user map", userMap)
         res.send(userMap);
     });
 };

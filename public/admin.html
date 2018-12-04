@@ -70,7 +70,6 @@
             background-color: #fff !important;
             color: #623B5A;
         }
-
         .panel-footer h3 {
             font-size: 32px;
         }
@@ -112,6 +111,7 @@
             color: #fff !important;
         }
 
+
         .slide {
             animation-name: slide;
             -webkit-animation-name: slide;
@@ -142,76 +142,6 @@
             }
         }
 
-        .my-btn {
-            background-color: #623B5A !important;
-            color: white !important;
-        }
-
-        .dropdown {
-            cursor: context-menu;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .dropdown a {
-            text-decoration: none;
-        }
-
-        /* Dropdown Content (Hidden by Default) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            display: block;
-            padding: 3px 20px;
-            clear: both;
-            font-weight: 400;
-            line-height: 1.42857143;
-            color: #333;
-            white-space: nowrap;
-        }
-
-        /* Change color of dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
-        /* Show the dropdown menu on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        a {
-            display: block;
-            padding: 3px 20px;
-            clear: both;
-            font-weight: 400;
-            line-height: 1.42857143;
-            color: #333;
-            white-space: nowrap;
-        }
-
-        .form-inline {
-            padding: 20px;
-        }
-
-        .form-inline > * {
-            margin: 0px 5px 0px 5px !important;
-        }
-
-        .div container {
-            margin-top: 100px;
-            margin-bottom: 100px;
-        }
-
     </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -238,76 +168,20 @@
     <p>Improve yourself</p>
 </div>
 
-<div class="col-md-12 text-center">
 
-    <button id="newHabitBtn" type="button" class="btn my-btn" data-toggle="modal" data-target="#exampleModal">+ new
-        habit
-    </button>
-    <div class="btn-group " role="group" aria-label="Button group with nested dropdown" style="align: center">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Filter
-            <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li><a tabindex="-1" href="#">Done today</a></li>
-            <li><a tabindex="-1" href="#">To be done today</a></li>
+<div class="container">
+    <h2>User list</h2>
+    <table class="table" id="users">
 
-            <li class="dropdown">
-                <a>Category</a>
-                <div class="dropdown-content">
-                    <a id="excercise">Excercise</a>
-                    <a id="food">Food</a>
-                    <a id="self-care">Self care</a>
-                    <a id="skill">Skill</a>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Habits Per User</th>
+        </tr>
 
-                </div>
-            </li>
-
-
-        </ul>
-        <button id="clearFilter" type="button" class="btn btn-outline-secondary">reset</button>
-    </div>
-
-</div>
-</div>
-
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="margin-top: 100px">
-            <div class="modal-header">
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <form id="newHabitFrom" class="form-inline col-md-12 text-center">
-                    <div class="form-group">
-                        <label for="habitName" style="margin-right: 5px"> Habit:</label>
-                        <input type="text" class="form-control" id="habitName">
-                    </div>
-
-                    <label for="category"> Category:</label>
-                    <select class="form-control" id="category">
-                        <option selected>Choose category</option>
-                        <option value="5c054ea146238108a4770b1d">Excercise</option>
-                        <option value="5c054ec40ad31d10dcf96675">Food</option>
-                        <option value="5c054ecf0ad31d10dcf96676">Self care</option>
-                        <option value="5c054edb0ad31d10dcf96677">Skill</option>
-                    </select>
-
-
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn my-btn" id="submitNewHabitForm">Submit</button>
-
-            </div>
-        </div>
-    </div>
+    </table>
 </div>
 
 
@@ -315,14 +189,28 @@
     <h2>Habits list</h2>
     <table class="table" id="habits">
 
-        <tr class="never-hide">
+        <tr>
+            <th>Id</th>
             <th>Name</th>
-            <th>Category</th>
+            <th>Category id</th>
             <th>Done</th>
             <th>Date</th>
-            <th>Action
+        </tr>
 
-            </th>
+    </table>
+</div>
+
+
+<div class="container">
+    <h2>User 1</h2>
+    <table class="table" id="userData">
+
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Category id</th>
+            <th>Done</th>
+            <th>Date</th>
         </tr>
 
     </table>
@@ -368,7 +256,7 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="resources/dashboard.js">
+<script src="resources/admin.js">
 </script>
 </body>
 </html>

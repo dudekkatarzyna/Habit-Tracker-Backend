@@ -5,9 +5,10 @@ const cookieParser = require('cookie-parser');
 const clearCookies = require('./middleware/clearCookies');
 const habitsPerUser = require('./routes/habitsPerUser');
 const userRoute = require('./routes/user');
+const category = require('./routes/category');
 const sessionRoute = require('./routes/session');
 
-const port = 8082;
+const port = 8080;
 
 const mongoose = require('mongoose');
 const dev_db_url = 'mongodb://kdudek:123abc@ds125423.mlab.com:25423/mes';
@@ -32,10 +33,11 @@ app.use(expressSession({
         expires: 600000
     }
 }));
-app.use(clearCookies);
+//app.use(clearCookies);
 app.use('/', sessionRoute);
 app.use('/user', userRoute);
 app.use('/habitsPerUser', habitsPerUser);
+app.use('/category', category);
 app.use('/resources', express.static('public/resources'));
 
 

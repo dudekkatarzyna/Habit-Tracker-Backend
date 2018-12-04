@@ -1,5 +1,5 @@
 const user_controller = require('../controllers/user');
-const User = require('../models/user')
+const User = require('../models/user');
 const path = require('path');
 
 exports.homePage = function (req, res) {
@@ -8,6 +8,10 @@ exports.homePage = function (req, res) {
 
 exports.dashboard = function (req, res) {
     res.sendFile(path.resolve('public/dashboard.html'));
+};
+
+exports.admin = function (req, res) {
+    res.sendFile(path.resolve('public/admin.html'));
 };
 
 exports.getLogin = function (req, res) {
@@ -22,15 +26,24 @@ exports.postLogin = function (req, res) {
         if (error || !user) {
             res.redirect(401, '/login');
         } else {
+            console.log(user);
             req.session.userId = user._id;
-            res.redirect('/dashboard');
+            req.session.isAdmin = user.admin;
+            if(req.session.isAdmin){
+                //redirect to admin view
+                res.redirect('/admin');
+            }
+            else { //plain user
+                res.redirect('/dashboard');
+            }
+
         }
 
     });
 };
 
 exports.logout = function (req, res) {
-    if (req.session.user && req.cookies.user_sid) {
+    if (req.session.userId && req.cookies.user_sid) {
         res.clearCookie('user_sid');
         delete req.session.userId;
         res.redirect('/');

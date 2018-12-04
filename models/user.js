@@ -11,6 +11,7 @@ let UserSchema = new Schema({
     name: {type: String, required: false, max: 100},
     surname: {type: String, required: false, max: 100},
     habitsPerUserId: [{type: String, required: false}],
+    admin: {type: Boolean, required: true}
 });
 
 UserSchema.plugin(uniqueValidator);
