@@ -57,7 +57,7 @@ exports.user_list = function (req, res, next) {
 
     User.find({}, function (err, users) {
         // console.log("in user find")
-        var userMap = {};
+        const userMap = {};
 
         users.forEach(function (user) {
             userMap[user._id] = user;
@@ -75,7 +75,7 @@ exports.user_deleteHabit = async function (req) {
     console.log(user.habitsPerUserId);
 
 
-    console.log('req', req.params)
+    console.log('req', req.params);
     await User.findByIdAndUpdate({_id: req.session.userId}, {$pull: {habitsPerUserId: req.params.id}}, function (err) {
         if (err) return next(err);
 

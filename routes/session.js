@@ -7,11 +7,11 @@ const redirectToHomeIfNotLoggedIn = require('../middleware/redirectToHomeIfNotLo
 const redirectToHomeIfNotLoggedInAsAdmin = require('../middleware/redirectToHomeIfNotLoggedInAsAdmin');
 
 
-router.get('/', redirectToDashboardOrAdminIfLoggedIn, session_controller.homePage)
+router.get('/', redirectToDashboardOrAdminIfLoggedIn, session_controller.homePage);
 
-router.get('/dashboard', redirectToHomeIfNotLoggedIn, session_controller.dashboard)
+router.get('/dashboard', redirectToHomeIfNotLoggedIn, session_controller.dashboard);
 
-router.get('/admin', redirectToHomeIfNotLoggedInAsAdmin, session_controller.admin)
+router.get('/admin', redirectToHomeIfNotLoggedInAsAdmin, session_controller.admin);
 
 router.get('/login', session_controller.getLogin);
 

@@ -33,22 +33,15 @@ $(function () {
 
     axios.get('/user/userList')
         .then(async function (response) {
-            //  console.log(response);
-            //  console.log(response.data);
+
             const data = response.data;
             for (let prop in data) {
-                var userHabits = [];
-                console.log("new for")
+                const userHabits = [];
                 for (let habit in data[prop].habitsPerUserId) {
 
-                    //  console.log(data[prop]);
-                    console.log(habit);
                     const response = await axios.get('/habitsPerUser/details/' + data[prop].habitsPerUserId[habit]);
-
-                    var name = response.data.name;
-                    //console.log(name);
+                    const name = response.data.name;
                     userHabits.push(name);
-                    //console.log(userHabits);
                 }
                 $('#users tr:last').after(` <tr>
                                 <td>${data[prop]._id}</td>
@@ -66,18 +59,11 @@ $(function () {
 
     axios.get('/habitsPerUser/habitsList')
         .then(async function (response) {
-            //console.log(response);
             const data = response.data;
-
-            // console.log(data);
-            date = new Date();
             for (let prop in data) {
 
-                //console.log(data[prop].done);
-                var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
                 let format = formatDates(data[prop].done);
-                for (var i = 0; i < format.length; i++) {
+                for (let i = 0; i < format.length; i++) {
                     format[i] = format[i] + '<br />';
 
                 }

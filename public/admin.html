@@ -269,7 +269,6 @@
     </div>
 
 </div>
-</div>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -355,7 +354,7 @@
                 event.preventDefault();
 
                 // Store hash
-                var hash = this.hash;
+                const hash = this.hash;
 
                 // Using jQuery's animate() method to add smooth page scroll
                 // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
@@ -371,9 +370,9 @@
 
         $(window).scroll(function () {
             $(".slideanim").each(function () {
-                var pos = $(this).offset().top;
+                const pos = $(this).offset().top;
 
-                var winTop = $(window).scrollTop();
+                const winTop = $(window).scrollTop();
                 if (pos < winTop + 600) {
                     $(this).addClass("slide");
                 }

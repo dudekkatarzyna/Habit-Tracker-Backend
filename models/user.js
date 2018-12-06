@@ -1,6 +1,5 @@
-
-var bcrypt = require('bcryptjs');
-const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 
@@ -24,9 +23,9 @@ UserSchema.statics.authenticate = function (username, password, callback) {
             if (err) {
                 return callback(err);
             } else if (!user) {
-                var err = new Error('User not found.');
-                err.status = 401;
-                return callback(err);
+                const error = new Error('User not found.');
+                error.status = 401;
+                return callback(error);
             }
             bcrypt.compare(password, user.password, function (err, result) {
                 if (result === true) {
@@ -40,7 +39,7 @@ UserSchema.statics.authenticate = function (username, password, callback) {
 
 
 UserSchema.pre('save', function (next) {
-    var user = this;
+    const user = this;
     bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) {
             return next(err);

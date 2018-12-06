@@ -1,3 +1,4 @@
+
 $(function () {
 
 
@@ -71,15 +72,15 @@ $(function () {
             //console.log(response);
             const data = response.data;
 
-            date = new Date();
+            const date = new Date();
             for (let prop in data) {
 
 
                 //console.log(data[prop].done);
-                var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
                 let format = formatDates(data[prop].done);
-                for (var i = 0; i < format.length; i++) {
+                for (let i = 0; i < format.length; i++) {
                     format[i] = format[i] + '<br />';
 
                 }
@@ -171,7 +172,7 @@ $(function () {
         console.log("habits");
         event.target.setAttribute('disabled', 'disabled');
 
-        var habitId = event.target.getAttribute('data-habit');
+        const habitId = event.target.getAttribute('data-habit');
         axios.put('/habitsperuser/' + habitId + '/update', {
             done: event.target.getAttribute('data-timestamp')
         })

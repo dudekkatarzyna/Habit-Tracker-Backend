@@ -28,7 +28,7 @@ $(function () {
                 console.log(error.response.status);
                 switch (error.response.status) {
                     case 416: //password dont match
-                        $('.password-error').removeClass('hide')
+                        $('.password-error').removeClass('hide');
                         $('#password').val('');
                         $('#password').removeClass('valid');
                         $('#confirmPassword').val('');
@@ -44,7 +44,7 @@ $(function () {
                         $('#password').removeClass('valid');
                         $('#confirmPassword').val('');
                         $('#confirmPassword').removeClass('valid');
-                        $('.username-error').removeClass('hide')
+                        $('.username-error').removeClass('hide');
                         break;
                 }
 
