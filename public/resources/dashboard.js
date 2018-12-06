@@ -1,5 +1,41 @@
 $(function () {
 
+
+    $('#completed').on('click', function () {
+
+        $("#habits tr").addClass("hide");
+
+        $(`#habits tr.never-hide`).removeClass("hide");
+        $('#habits [type="checkbox"]').each(function (i, chk) {
+
+            if ($(chk).hasClass('latest')) {
+                if ($(chk).attr('disabled')) {
+                    const habitId = $(chk).attr('data-habit');
+                    $(`#habits tr#tr-${habitId}`).removeClass("hide");
+                }
+
+            }
+        });
+    });
+
+
+    $('#to-comlete').on('click', function () {
+        console.log("completed");
+
+        $("#habits tr").addClass("hide");
+        $(`#habits tr.never-hide`).removeClass("hide");
+
+        $('#habits [type="checkbox"]').each(function (i, chk) {
+            if ($(chk).hasClass('latest')) {
+                if (!($(chk).attr('disabled'))) {
+                    const habitId = $(chk).attr('data-habit');
+                    $(`#habits tr#tr-${habitId}`).removeClass("hide");
+                }
+            }
+
+        });
+    });
+
     $('#newHabitFrom').submit(sendNewHabit);
 
     $('#submitNewHabitForm').click(sendNewHabit);
@@ -35,9 +71,9 @@ $(function () {
             //console.log(response);
             const data = response.data;
 
-            // console.log(data);
             date = new Date();
             for (let prop in data) {
+
 
                 //console.log(data[prop].done);
                 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -51,6 +87,7 @@ $(function () {
                 const response = await axios.get(`/category/details/${data[prop].categoryId}`);
                 console.log('response:', response);
 
+                // class="${data[prop].categoryId}
                 $('#habits tr:last').after(` <tr id="tr-${data[prop]._id}" class="${data[prop].categoryId}">
             <td>${data[prop].name}</td>
             <td>${response.data.name}</td>
@@ -63,7 +100,7 @@ $(function () {
                 <label class="form-check-label" for="inlineCheckbox2-${data[prop]._id}">${days[getDate(date, 2).getDay()]}</label>
                 <input class="form-check-input mark-done" type="checkbox" data-timestamp="${getDate(date, 1).getTime()}" data-habit="${data[prop]._id}" id="inlineCheckbox3-${data[prop]._id}" value="option3" >
                 <label class="form-check-label" for="inlineCheckbox3-${data[prop]._id}">${days[getDate(date, 1).getDay()]}</label>
-                <input class="form-check-input mark-done" type="checkbox" data-timestamp="${new Date().getTime()}" data-habit="${data[prop]._id}" id="inlineCheckbox4-${data[prop]._id}" value="option4" >
+                <input class="form-check-input mark-done latest" type="checkbox" data-timestamp="${new Date().getTime()}" data-habit="${data[prop]._id}" id="inlineCheckbox4-${data[prop]._id}" value="option4" >
                 <label class="form-check-label" for="inlineCheckbox4-${data[prop]._id}">${days[date.getDay()]}</label>
              </div>
             </td>
@@ -104,17 +141,28 @@ $(function () {
 
         $('#tr-' + habitId).remove();
 
-        axios.delete('/habitsPerUser/'+habitId+'/delete')
-             .then(function (response) {
+        axios.delete('/habitsPerUser/' + habitId + '/delete')
+            .then(function (response) {
 
-                 console.log(response);
-                 window.location = "/dashboard";
+                console.log(response);
+                // window.location = "/dashboard";
 
-             }).catch(function (error) {
-                 console.log(error);
+            }).catch(function (error) {
+                console.log(error);
 
-             }
-         );
+            }
+        );
+
+        axios.delete('user/deleteHabit/' + habitId)
+            .then(function (response) {
+                console.log(response);
+                window.location = "/dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+
+            });
+
     });
 
 

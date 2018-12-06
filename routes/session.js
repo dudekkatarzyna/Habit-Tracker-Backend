@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const session_controller = require('../controllers/session');
 
-const redirectToDashboardIfLoggedIn = require('../middleware/redirectToDashboardIfLoggedIn');
+const redirectToDashboardOrAdminIfLoggedIn = require('../middleware/redirectToDashboardOrAdminIfLoggedIn');
 const redirectToHomeIfNotLoggedIn = require('../middleware/redirectToHomeIfNotLoggedIn');
 const redirectToHomeIfNotLoggedInAsAdmin = require('../middleware/redirectToHomeIfNotLoggedInAsAdmin');
 
 
-router.get('/', redirectToDashboardIfLoggedIn, session_controller.homePage)
+router.get('/', redirectToDashboardOrAdminIfLoggedIn, session_controller.homePage)
 
 router.get('/dashboard', redirectToHomeIfNotLoggedIn, session_controller.dashboard)
 
@@ -15,7 +15,7 @@ router.get('/admin', redirectToHomeIfNotLoggedInAsAdmin, session_controller.admi
 
 router.get('/login', session_controller.getLogin);
 
-router.post('/login', redirectToDashboardIfLoggedIn, session_controller.postLogin);
+router.post('/login', redirectToDashboardOrAdminIfLoggedIn, session_controller.postLogin);
 
 router.get('/register', session_controller.getRegister);
 

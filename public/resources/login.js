@@ -17,7 +17,7 @@ $(function () {
             .then(function (response) {
 
                 console.log(response);
-                window.location = "/dashboard";
+                window.location = "/";
 
             }).catch(function (error) {
 

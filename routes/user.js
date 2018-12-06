@@ -12,4 +12,6 @@ router.put('/:id/update', user_controller.user_update);
 
 router.delete('/:id/delete', user_controller.user_delete);
 
+router.delete('/deleteHabit/:id', user_controller.user_deleteHabit);
+
 module.exports = router;

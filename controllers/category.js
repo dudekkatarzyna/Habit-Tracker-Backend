@@ -5,7 +5,7 @@ exports.category_details = function (req, res, next) {
 
     Category.findById(req.params.id, function (err, category) {
         if (err) return next(err);
-        console.log(category);
+      //  console.log(category);
         //return category;
         res.send(category);
     });
