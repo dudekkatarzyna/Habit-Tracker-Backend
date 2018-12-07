@@ -15,17 +15,17 @@ $(function () {
         const password = $("#password").val();
         const confirmPassword = $("#confirmPassword").val();
 
-        console.log(username, password);
+       // console.log(username, password);
 
         axios.post('/register', {name, surname, username, password, confirmPassword})
             .then(function (response) {
 
-                console.log(response);
+               // console.log(response);
                 window.location = "/dashboard";
 
             }).catch(function (error) {
 
-                console.log(error.response.status);
+               // console.log(error.response.status);
                 switch (error.response.status) {
                     case 416: //password dont match
                         $('.password-error').removeClass('hide');

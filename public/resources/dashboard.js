@@ -86,7 +86,7 @@ $(function () {
                 }
 
                 const response = await axios.get(`/category/details/${data[prop].categoryId}`);
-                console.log('response:', response);
+              //  console.log('response:', response);
 
                 // class="${data[prop].categoryId}
                 $('#habits tr:last').after(` <tr id="tr-${data[prop]._id}" class="${data[prop].categoryId}">
@@ -135,9 +135,9 @@ $(function () {
 
     $('#habits').on('click', '.deleteButton', event => {
 
-        console.log("clicked");
+       // console.log("clicked");
         const habitId = event.target.getAttribute('habitId');
-        console.log(event.target.getAttribute('habitId'));
+      //  console.log(event.target.getAttribute('habitId'));
         event.preventDefault();
 
         $('#tr-' + habitId).remove();
@@ -145,7 +145,7 @@ $(function () {
         axios.delete('/habitsPerUser/' + habitId + '/delete')
             .then(function (response) {
 
-                console.log(response);
+             //   console.log(response);
                 // window.location = "/dashboard";
 
             }).catch(function (error) {
@@ -156,7 +156,7 @@ $(function () {
 
         axios.delete('user/deleteHabit/' + habitId)
             .then(function (response) {
-                console.log(response);
+            //    console.log(response);
                 window.location = "/dashboard";
             })
             .catch(function (error) {
@@ -169,7 +169,7 @@ $(function () {
 
     $('#habits').on('click', '.mark-done', function (event) {
 
-        console.log("habits");
+       // console.log("habits");
         event.target.setAttribute('disabled', 'disabled');
 
         const habitId = event.target.getAttribute('data-habit');
@@ -181,7 +181,7 @@ $(function () {
                 //console.log(event.target.getAttribute('data-timestamp'));
 
                 let newDate = formatDate(new Date(parseInt(event.target.getAttribute('data-timestamp'))));
-                $(`#done-${habitId}`).append(newDate);
+                $(`#done-${habitId}`).append(newDate+'<br/>');
 
 
             });
@@ -221,17 +221,17 @@ function formatDates(dates) {
 async function sendNewHabit(event) {
 
     event.preventDefault();
-    console.log("submitted");
+   // console.log("submitted");
 
     const habitName = $("#habitName").val();
     const category = $("#category").val();
 
-    console.log('log:', habitName, category);
+   // console.log('log:', habitName, category);
 
     axios.post('/habitsPerUser/create', {habitName, category})
         .then(function (response) {
-            console.log("saved");
-            console.log(response);
+           // console.log("saved");
+           // console.log(response);
             window.location = "/dashboard";
 
         }).catch(function (error) {

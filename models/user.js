@@ -17,7 +17,7 @@ UserSchema.plugin(uniqueValidator);
 
 //authenticate input against database
 UserSchema.statics.authenticate = function (username, password, callback) {
-    console.log(username, password);
+    //console.log(username, password);
     User.findOne({username: username})
         .exec(function (err, user) {
             if (err) {

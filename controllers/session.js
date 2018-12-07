@@ -31,11 +31,11 @@ exports.postLogin = function (req, res) {
             req.session.isAdmin = user.admin;
             if (req.session.isAdmin) {
                 //redirect to admin view
-                console.log("res.redirect('/admin');");
+              //  console.log("res.redirect('/admin');");
                 res.redirect('/admin');
             }
             else { //plain user
-                console.log("res.redirect('/dashboard');");
+               // console.log("res.redirect('/dashboard');");
                 res.redirect('/dashboard');
             }
 
@@ -60,10 +60,10 @@ exports.getRegister = function (req, res) {
 };
 
 exports.postRegister = function (req, res, next) {
-    console.log("post");
+   // console.log("post");
     user_controller.user_create(req, res)
         .then(user => {
-            console.log("id:", user._id);
+          //  console.log("id:", user._id);
             req.session.userId = user._id;
             req.session.isAdmin = user.admin;
             res.redirect('/dashboard');

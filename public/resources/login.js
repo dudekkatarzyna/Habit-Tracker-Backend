@@ -13,11 +13,11 @@ $(function () {
         const username = $("#username").val();
         const password = $("#password").val();
 
-        console.log(username, password);
+    //    console.log(username, password);
         axios.post('/login', {username, password})
             .then(function (response) {
 
-                console.log(response);
+             //   console.log(response);
                 window.location = "/";
 
             }).catch(function (error) {
