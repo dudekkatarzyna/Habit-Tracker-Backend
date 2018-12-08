@@ -1,4 +1,5 @@
 const redirectToDashboardOrAdminIfLoggedIn = (req, res, next) => {
+
     if (req.session.userId && req.cookies.user_sid) {
 
         if (req.session.isAdmin) {
