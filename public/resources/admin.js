@@ -88,9 +88,9 @@ $(function () {
 
     $('#habits').on('click', '.deleteButton', event => {
 
-       // console.log("clicked");
+        console.log("clicked");
         const habitId = event.target.getAttribute('habitId');
-     //   console.log(event.target.getAttribute('habitId'));
+        console.log(event.target.getAttribute('habitId'));
         event.preventDefault();
 
         $('#tr-' + habitId).remove();
@@ -98,7 +98,7 @@ $(function () {
         axios.delete('/habitsPerUser/'+habitId+'/delete')
             .then(function (response) {
 
-             //   console.log(response);
+                console.log(response);
                 window.location = "/admin";
 
             }).catch(function (error) {
@@ -110,7 +110,7 @@ $(function () {
 
         axios.delete('user/deleteHabit/'+habitId)
             .then(function (response) {
-            //    console.log(response);
+                console.log(response);
                 window.location = "/dashboard";
             })
             .catch(function (error) {
@@ -153,12 +153,12 @@ function formatDates(dates) {
 async function sendNewHabit(event) {
 
     event.preventDefault();
- //   console.log("submitted");
+    console.log("submitted");
 
     const habitName = $("#habitName").val();
     const category = $("#category").val();
 
-  //  console.log('log:', habitName, category);
+    console.log('log:', habitName, category);
 
     axios.post('/habitsPerUser/create', {habitName, category})
         .then(function (response) {

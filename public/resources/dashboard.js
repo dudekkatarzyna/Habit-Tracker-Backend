@@ -192,7 +192,6 @@ $(function () {
 
 function getDate(date, daysBefore) {
     return new Date(new Date(date).getTime() - daysBefore * 1000 * 60 * 60 * 24);
-
 }
 
 function formatDate(date) {

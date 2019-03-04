@@ -6,6 +6,7 @@ const clearCookies = require('./middleware/clearCookies');
 const habitsPerUser = require('./routes/habitsPerUser');
 const userRoute = require('./routes/user');
 const category = require('./routes/category');
+const database = require('./routes/database');
 const sessionRoute = require('./routes/session');
 
 const port = 8080;
@@ -38,6 +39,7 @@ app.use('/', sessionRoute);
 app.use('/user', userRoute);
 app.use('/habitsPerUser', habitsPerUser);
 app.use('/category', category);
+app.use('/database', database);
 app.use('/resources', express.static('public/resources'));
 
 

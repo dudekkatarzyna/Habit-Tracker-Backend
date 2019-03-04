@@ -29,3 +29,21 @@ exports.category_create = function (req, res, next) {
         res.send('Habit Created successfully');
     });
 };
+
+
+exports.category_list = function (req, res, next) {
+
+    let categoryMap = {};
+
+    return Category.find({}, function(err, categories) {
+
+        categories.forEach(function(habit) {
+                categoryMap[habit._id] = habit;
+
+        });
+
+      //  console.log(categoryMap)
+        return categoryMap;
+    });
+
+};

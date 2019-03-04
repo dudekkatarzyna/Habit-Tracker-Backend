@@ -14,3 +14,5 @@ router.get('/habitsList', hpu_controller.hpu_list);
 router.put('/:id/update', hpu_controller.hpu_update);
 
 router.delete('/:id/delete', hpu_controller.hpu_delete);
+
+router.get('/topCategories', hpu_controller.hpu_topCategories);

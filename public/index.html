@@ -70,6 +70,7 @@
             background-color: #fff !important;
             color: #623B5A;
         }
+
         .panel-footer h3 {
             font-size: 32px;
         }
@@ -111,7 +112,6 @@
             color: #fff !important;
         }
 
-
         .slide {
             animation-name: slide;
             -webkit-animation-name: slide;
@@ -142,6 +142,7 @@
             }
         }
 
+
     </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -171,7 +172,21 @@
 </div>
 
 
+<div class="container" style="margin: 0 100px; float: left; max-width: 500px">
+    <h2 style="max-width: 400px">Our Top 3 categories</h2>
+    <table class="table" id="top-categories" style="max-width: 400px">
+        <tr style="max-width: 400px">
 
+        </tr>
+    </table>
+</div>
+
+
+<div id="community-stat" class="container" style="margin: 0 100px">
+    <h2>Join our community</h2>
+    <p></p>
+
+</div>
 <script>
     $(document).ready(function () {
         // Add smooth scrolling to all links in navbar + footer link
@@ -206,8 +221,14 @@
                 }
             });
         });
+
+
     });
+
+
 </script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="resources/index.js"></script>
 
 </body>
 </html>
