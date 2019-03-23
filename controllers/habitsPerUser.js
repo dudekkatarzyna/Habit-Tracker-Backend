@@ -3,6 +3,9 @@ const user_controller = require('../controllers/user');
 const category_controller = require('../controllers/category');
 
 exports.hpu_create = function (req, res, next) {
+
+    console.log(req)
+
     let habitsPerUser = new HabitsPerUser(
         {
             userId: req.session.userId,

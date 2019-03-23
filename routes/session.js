@@ -23,5 +23,7 @@ router.post('/register', session_controller.postRegister);
 
 router.get('/logout', session_controller.logout);
 
+router.get('/userId', session_controller.getUserId);
+
 module.exports = router;
 

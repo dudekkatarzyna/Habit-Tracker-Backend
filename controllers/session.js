@@ -18,40 +18,41 @@ exports.getLogin = function (req, res) {
     res.sendFile(path.resolve('public/login.html'));
 };
 
+exports.getUserId = function(req,res) {
+    console.log(req.session);
+    res.send(req.session.userId)
+};
+
 exports.postLogin = function (req, res) {
+
+    console.log(req.body)
+
     const username = req.body.username,
         password = req.body.password;
 
     User.authenticate(username, password, function (error, user) {
+        console.log('user ' + user)
         if (error || !user) {
             res.redirect(401, '/login');
         } else {
-            // console.log(user);
             req.session.userId = user._id;
             req.session.isAdmin = user.admin;
-            if (req.session.isAdmin) {
-                //redirect to admin view
-              //  console.log("res.redirect('/admin');");
-                res.redirect('/admin');
-            }
-            else { //plain user
-               // console.log("res.redirect('/dashboard');");
-                res.redirect('/dashboard');
-            }
-
+            console.log(req.session)
+            res.send(user);
         }
 
     });
+
+
 };
 
 exports.logout = function (req, res) {
+    console.log('logout')
     if (req.session.userId && req.cookies.user_sid) {
         res.clearCookie('user_sid');
         delete req.session.userId;
-        res.redirect('/');
-    } else {
-        res.redirect('/');
     }
+    res.send('ok')
 };
 
 exports.getRegister = function (req, res) {
@@ -60,13 +61,13 @@ exports.getRegister = function (req, res) {
 };
 
 exports.postRegister = function (req, res, next) {
-   // console.log("post");
+    console.log("post");
     user_controller.user_create(req, res)
         .then(user => {
-          //  console.log("id:", user._id);
+            console.log(user)
             req.session.userId = user._id;
             req.session.isAdmin = user.admin;
-            res.redirect('/dashboard');
+            res.send(user)
         })
         .catch(error => {
 
