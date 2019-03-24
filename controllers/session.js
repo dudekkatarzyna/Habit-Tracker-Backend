@@ -37,7 +37,7 @@ exports.postLogin = function (req, res) {
         } else {
             req.session.userId = user._id;
             req.session.isAdmin = user.admin;
-            console.log(req.session)
+            console.log(req.session);
             res.send(user);
         }
 
@@ -61,7 +61,7 @@ exports.getRegister = function (req, res) {
 };
 
 exports.postRegister = function (req, res, next) {
-    console.log("post");
+
     user_controller.user_create(req, res)
         .then(user => {
             console.log(user)

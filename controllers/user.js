@@ -28,11 +28,12 @@ exports.user_create = function (req, next) {
 };
 
 exports.user_details = function (req, res, next) {
-    User.findById(req, function (err, user) {
+    User.findById(req.params.id, function (err, user) {
         if (err) return next(err);
 
-        return user;
-        // res.send(user);
+        console.log(user)
+        //return user;
+         res.send(user);
     });
 };
 
