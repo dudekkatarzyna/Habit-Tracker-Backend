@@ -4,11 +4,12 @@ const category_controller = require('../controllers/category');
 
 exports.hpu_create = function (req, res, next) {
 
-    console.log(req)
+    console.log(req.session)
+    console.log(req.body)
 
     let habitsPerUser = new HabitsPerUser(
         {
-            userId: req.session.userId,
+            userId: req.body.userId,
             name: req.body.habitName,
             categoryId: req.body.category,
             done: []
@@ -24,12 +25,12 @@ exports.hpu_create = function (req, res, next) {
         //  res.send('Habit Created successfully')
     });
 
-
-    if (!req.session.isAdmin) {
+//console.log(req)
+    if (!req.body.isAdmin) {
         user_controller.user_update(habitsPerUser);
     }
 
-    res.send('Habit Created successfully');
+    res.send(habitsPerUser);
 };
 
 exports.hpu_details = function (req, res, next) {
@@ -40,8 +41,12 @@ exports.hpu_details = function (req, res, next) {
 };
 
 exports.hpu_update = function (req, res, next) {
-    HabitsPerUser.findByIdAndUpdate(req.params.id, {$push: req.body}, function (err) {
+
+    console.log(req.params.id)
+    console.log(req.body.date)
+    HabitsPerUser.findByIdAndUpdate(req.params.id, {$push: {done: req.body.date}}, {new: true}, function (err, doc) {
         if (err) return next(err);
+        console.log(doc)
         res.send('HabitsPerUser udpated.');
     });
 };
@@ -49,7 +54,7 @@ exports.hpu_update = function (req, res, next) {
 exports.hpu_delete = function (req, res) {
 
     HabitsPerUser.findByIdAndRemove(req.params.id, function (err) {
-        if (err) return next(err);
+        if (err) return 'error';
 
         //res.send('Deleted successfully!');
     });
@@ -63,9 +68,8 @@ exports.hpu_list = function (req, res, next) {
 
         habits.forEach(function (habit) {
 
-            if (habit.userId === req.session.userId || req.session.isAdmin) {
-                habitsMap[habit._id] = habit;
-            }
+            habitsMap[habit._id] = habit;
+
 
         });
         res.send(habitsMap);
@@ -89,7 +93,7 @@ exports.hpu_topCategories = async function (req, res, next) {
                 //console.log(categoryValue[j]);
                 if (!(habit.categoryId).localeCompare(response[j]._id)) {
                     categoryValue[j] = categoryValue[j] + 1;
-                 //   console.log('match', habit.categoryId, response[j]._id);
+                    //   console.log('match', habit.categoryId, response[j]._id);
                 }
             }
 
@@ -104,17 +108,17 @@ exports.hpu_topCategories = async function (req, res, next) {
 
         console.log(dict);
 
-        var items = Object.keys(dict).map(function(key) {
+        var items = Object.keys(dict).map(function (key) {
             return [key, dict[key]];
         });
 
-        items.sort(function(first, second) {
+        items.sort(function (first, second) {
             return second[1] - first[1];
         });
 
 // Create a new array with only the first 5 items
-      //  console.log(items)
-      //  console.log(items.slice(0, 3));
+        //  console.log(items)
+        //  console.log(items.slice(0, 3));
 
 
         res.send(items.slice(0, 3));

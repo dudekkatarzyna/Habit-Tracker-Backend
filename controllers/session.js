@@ -1,6 +1,7 @@
 const user_controller = require('../controllers/user');
 const User = require('../models/user');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 exports.homePage = function (req, res) {
     res.sendFile(path.resolve('public/index.html'));
@@ -18,7 +19,7 @@ exports.getLogin = function (req, res) {
     res.sendFile(path.resolve('public/login.html'));
 };
 
-exports.getUserId = function(req,res) {
+exports.getUserId = function (req, res) {
     console.log(req.session);
     res.send(req.session.userId)
 };
@@ -29,14 +30,22 @@ exports.postLogin = function (req, res) {
 
     const username = req.body.username,
         password = req.body.password;
+    const secret = 'mysecretsshhh';
 
     User.authenticate(username, password, function (error, user) {
         console.log('user ' + user)
         if (error || !user) {
             res.redirect(401, '/login');
         } else {
+            //
+            // const token = jwt.sign(user.toJSON(), secret, {
+            //     expiresIn: "120"
+            // });
+            // res.cookie('token', token, {httpOnly: true})
+            //     .sendStatus(200);
+
+
             req.session.userId = user._id;
-            req.session.isAdmin = user.admin;
             console.log(req.session);
             res.send(user);
         }
@@ -45,6 +54,7 @@ exports.postLogin = function (req, res) {
 
 
 };
+
 
 exports.logout = function (req, res) {
     console.log('logout')
@@ -65,13 +75,14 @@ exports.postRegister = function (req, res, next) {
     user_controller.user_create(req, res)
         .then(user => {
             console.log(user)
-            req.session.userId = user._id;
-            req.session.isAdmin = user.admin;
-            res.send(user)
+            // req.session.userId = user._id;
+            // req.session.isAdmin = user.admin;
+            res.send(res)
         })
         .catch(error => {
 
             res.redirect(error.status || 406, '/register');
+            res.send(error)
 
         });
 };

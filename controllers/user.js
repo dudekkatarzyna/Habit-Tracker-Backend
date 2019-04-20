@@ -4,6 +4,12 @@ exports.user_create = function (req, next) {
 
     console.log('create')
     console.log(req.body)
+    if(User.find({username:req.body.username}).count())
+    {
+        const error = new Error("User already exists");
+        error.status = 406;
+        return Promise.reject(error);
+    }
     if (req.body.password !== req.body.confirmPassword) {
         const error = new Error("Not matching");
         error.status = 416;
@@ -27,11 +33,11 @@ exports.user_create = function (req, next) {
     });
 };
 
-exports.user_details = function (req, res, next) {
+exports.user_details= function (req, res, next) {
     User.findById(req.params.id, function (err, user) {
         if (err) return next(err);
 
-        console.log(user)
+        console.log('user: '+user)
         //return user;
          res.send(user);
     });
@@ -75,18 +81,12 @@ exports.user_list = function (req, res, next) {
     });
 };
 
-exports.user_deleteHabit = async function (req) {
-    // console.log("delete habit user");
-    // console.log(req.session.userId);
-    const user = await User.findById(req.session.userId);
-    // console.log(user.habitsPerUserId);
+exports.user_deleteHabit = async function (req,res) {
 
+    await User.findByIdAndUpdate({_id: req.body.userId}, {$pull: {habitsPerUserId: req.body.habitId}}, function (err) {
+        if (err) return 'err';
 
-    // console.log('req', req.params);
-    await User.findByIdAndUpdate({_id: req.session.userId}, {$pull: {habitsPerUserId: req.params.id}}, function (err) {
-        if (err) return next(err);
-
-        // console.log('success');
+         console.log('success');
     });
-
+    res.send('ok')
 };

@@ -67,7 +67,7 @@ $(function () {
         $("#habits tr.hide").removeClass("hide");
     });
 
-    axios.get('/habitsPerUser/habitsList')
+    axios.get('')
         .then(async function (response) {
             //console.log(response);
             const data = response.data;
