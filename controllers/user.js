@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const JWT = require("./JWT");
 
 exports.user_create = function (req, next) {
 
@@ -34,13 +35,28 @@ exports.user_create = function (req, next) {
 };
 
 exports.user_details= function (req, res, next) {
-    User.findById(req.params.id, function (err, user) {
-        if (err) return next(err);
 
-        console.log('user: '+user)
-        //return user;
-         res.send(user);
-    });
+
+    console.log('jwt ', req.get("Authorization"))
+    const decoded = JWT.verify(req.get("Authorization"))
+    console.log(decoded.userId)
+    console.log(req.params.id)
+    if(!(decoded.userId===req.params.id)){
+        res.send(null);
+    }
+    else{
+        //verify token, jeśli error to wyloguj
+        //z headeara, decode, porównanie z id.
+        User.findById(req.params.id, function (err, user) {
+            if (err) return next(err);
+
+            console.log('user: '+user)
+            //return user;
+            res.send(user);
+        });
+    }
+
+
 };
 
 exports.user_update = function (req, res, next) {

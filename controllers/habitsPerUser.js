@@ -1,8 +1,11 @@
+const JWT = require('./JWT');
 const HabitsPerUser = require('../models/habitsPerUser');
+const User = require('../models/user')
 const user_controller = require('../controllers/user');
 const category_controller = require('../controllers/category');
 
 exports.hpu_create = function (req, res, next) {
+
 
     console.log(req.session)
     console.log(req.body)
@@ -34,10 +37,34 @@ exports.hpu_create = function (req, res, next) {
 };
 
 exports.hpu_details = function (req, res, next) {
-    HabitsPerUser.findById(req.params.id, function (err, habitsPerUser) {
+
+    //  console.log(req.get("Authorization"))
+
+  //  console.log('jwt ', req.get("Authorization"))
+    const decoded = JWT.verify(req.get("Authorization"))
+
+    //console.log('userId', decoded)
+
+    User.findById(decoded.userId, function (err, user) {
         if (err) return next(err);
-        res.send(habitsPerUser);
+        console.log('user: ' + user)
+
+        const habits=user.habitsPerUserId;
+        if (habits.includes(req.params.id) || decoded.isAdmin) {
+
+            HabitsPerUser.findById(req.params.id, function (err, habitsPerUser) {
+                if (err) return next(err);
+                res.send(habitsPerUser);
+            });
+        } else {
+            res.send(null);
+        }
+
+
+
     });
+
+
 };
 
 exports.hpu_update = function (req, res, next) {

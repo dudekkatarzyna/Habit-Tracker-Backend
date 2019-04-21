@@ -1,7 +1,10 @@
+
+
 const user_controller = require('../controllers/user');
 const User = require('../models/user');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const JWT = require('./JWT')
 
 exports.homePage = function (req, res) {
     res.sendFile(path.resolve('public/index.html'));
@@ -37,17 +40,11 @@ exports.postLogin = function (req, res) {
         if (error || !user) {
             res.redirect(401, '/login');
         } else {
-            //
-            // const token = jwt.sign(user.toJSON(), secret, {
-            //     expiresIn: "120"
-            // });
-            // res.cookie('token', token, {httpOnly: true})
-            //     .sendStatus(200);
 
+            const token=JWT.generate(user);
+            res.send(token);
+            console.log(JWT.verify(token))
 
-            req.session.userId = user._id;
-            console.log(req.session);
-            res.send(user);
         }
 
     });
